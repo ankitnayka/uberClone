@@ -19,6 +19,13 @@ export const registerUser = async (req, res, next) => {
 
         const { fullName, email, password } = req.body;
 
+        const isuserExist=await usermodel.findOne({email});
+        
+        if(isuserExist){
+            return res.status(400).json({
+                message:"Already exist user email "
+            });
+        }
         const hashedPassword =  await bcrypt.hash(password, 10);
 
         // Create the user
