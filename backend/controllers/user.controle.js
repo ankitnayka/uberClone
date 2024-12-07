@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs'
 import BlacklistTokenModel from '../models/blacklistToken.model.js';
 
 export const registerUser = async (req, res, next) => {
+    console.log("request body"+req.body);
     try {
         // Validate request body
         const errors = validationResult(req);
@@ -15,10 +16,10 @@ export const registerUser = async (req, res, next) => {
             });
         }
 
-        console.log(req.body);
-
+        
         const { fullName, email, password } = req.body;
-
+        console.log(fullName);
+        
         const isuserExist=await usermodel.findOne({email});
         
         if(isuserExist){
@@ -40,7 +41,7 @@ export const registerUser = async (req, res, next) => {
         const token = user.generateAuthToken();
 
         // Send response
-        res.status(201).json({ token, user });
+        res.status(201).json({ token, user,message:"Account Create Successfully" });
     } catch (error) {
         console.error("Error registering user:", error.message);
         res.status(500).json({ message: "Internal server error" });
