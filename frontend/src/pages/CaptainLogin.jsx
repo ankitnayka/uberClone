@@ -31,6 +31,7 @@ const CaptainLogin=()=>{
           toast.success(data?.message || "Captain Logging Successfully !");
           console.log(data.captain)
           dispatch(setCaptain(data?.captain))
+          localStorage.setItem('token',data?.token)
           navigate('/')
         }
         if (error) {

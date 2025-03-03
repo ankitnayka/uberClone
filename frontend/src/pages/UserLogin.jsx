@@ -30,6 +30,7 @@ const UserLogin = () => {
           toast.success(data?.message || "Logging Successfully")
           console.log(data)
           dispatch(setUser(data?.user))
+          localStorage.setItem('token',data?.token)
         }
         if(error){
           toast.error(error?.message || "Something wrong !!!")
