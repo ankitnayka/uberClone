@@ -1,8 +1,10 @@
+import { useLogoutUserMutation } from "@/utils/api/userApi";
 import React from "react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
     const user=true
+  
   return (
     <div className="w-full py-4 bg-black text-white flex fixed top-0 z-50 justify-around  cursor-pointer ">
         <div className="max-w-3xl flex px-8  items-center  ">
@@ -27,7 +29,9 @@ const Header = () => {
                        <Link to='/login'>     <button className="px-4 border-2 rounded-xl border-white hover:gray-800 hover:rounded-xl">Log in</button> </Link>
 
                        <Link to='/signup'>  <button className="px-4  bg-white rounded-xl  text-black hover:gray-800 hover:rounded-xl">sign up </button> </Link>
+                                             
                         </>
+                        
                     )
 
                     }

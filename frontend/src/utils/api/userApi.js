@@ -1,3 +1,4 @@
+import { logoutUser } from '@/features/api/userSlice';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const BASE_URL = "http://localhost:4000/users/"
@@ -22,9 +23,15 @@ export const authApi = createApi({
                 method:"POST",
                 body:inputData
             })
+        }),
+        logoutUser:builder.mutation({
+            query:()=>({
+                url:"logout",
+                method:"GET"
+            })
         })
     })
 })
 
 
-export const { useRegisterUserMutation ,useLoginUserMutation} = authApi;
+export const { useRegisterUserMutation ,useLoginUserMutation,useLogoutUserMutation} = authApi;
