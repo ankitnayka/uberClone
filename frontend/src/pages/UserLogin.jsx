@@ -6,7 +6,7 @@ import Header from "@/uber/Header";
 import { useLoginUserMutation } from "@/utils/api/userApi";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { setUser } from "@/features/api/userSlice";
 const UserLogin = () => {
@@ -14,14 +14,15 @@ const UserLogin = () => {
         email: "",
         password: ""
     })
-
+    const [loginUser,{data,isLoading,isSuccess,isError,error}]=useLoginUserMutation()
+    const navigate=useNavigate()
+    
     const onchangeHandler = (e) => {
         const { name, value } = e.target;
         setInputData({ ...inputData, [name]: value })
         
     }
 
-    const [loginUser,{data,isLoading,isSuccess,isError,error}]=useLoginUserMutation()
 
     const dispatch=useDispatch()
 
@@ -31,14 +32,27 @@ const UserLogin = () => {
           console.log(data)
           dispatch(setUser(data?.user))
           localStorage.setItem('token',data?.token)
+
         }
-        if(error){
-          toast.error(error?.message || "Something wrong !!!")
-        }
+        if (error) {
+            const inputError = error?.data?.errors?.length ? error.data.errors[0].msg : null;
+          
+            if (inputError) {
+                
+              toast.error(inputError);
+            } else if(error?.data?.message) {
+                toast.error(error?.data?.message)
+                console.log(error?.data?.message);
+                
+            }else{
+                toast.error("Something went wrong");
+
+            }
+          }
       },[data,isSuccess,error,isError])
     const loginHandler=()=>{
+        loginUser(inputData)      
         console.log(inputData)
-          loginUser(inputData)      
     }
     return (
         <>

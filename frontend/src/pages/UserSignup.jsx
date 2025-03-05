@@ -6,7 +6,7 @@ import Header from "@/uber/Header";
 import { useRegisterUserMutation } from "@/utils/api/userApi";
 import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const UserSignup = () => {
@@ -20,14 +20,26 @@ const UserSignup = () => {
 
   const [registerUser,{data,isLoading,isSuccess,isError,error}]=useRegisterUserMutation()
 
-  
+  const navigate=useNavigate()
 
   useEffect(()=>{
     if(isSuccess){
       toast.success(data?.message)
+      navigate("/login")
+    
     }
     if(error){
-      toast.error(error?.message || "Something wrong !!!")
+      console.log(error)
+      if(error?.data?.errors?.length){
+        error.data.errors.forEach((err)=>{
+          toast.error(err.msg)
+        })
+      } else if (error?.data?.message) {
+        toast.error(error.data.message);
+        console.log(error.data.message);
+      } else {
+        toast.error("Something went wrong");
+      }
     }
   },[data,isSuccess,error,isError])
 

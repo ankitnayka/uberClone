@@ -5,7 +5,7 @@ import Footer from "@/uber/Footer";
 import Header from "@/uber/Header";
 import { useRegisterCaptainMutation } from "@/utils/api/captainApi";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const CaptainSignup = () => {
@@ -16,15 +16,26 @@ const CaptainSignup = () => {
     vehicle: { plate: "", color: "", capacity: 1, vehicleType: "" },
   });
 
+  const navigate=useNavigate()
+
   const [registerCaptain, { data, isLoading, isSuccess, isError, error }] =
     useRegisterCaptainMutation();
 
   useEffect(() => {
     if (isSuccess) {
       toast.success(data?.message);
+      navigate("/captain-login")
     }
     if (error) {
-      toast.error(error?.message || "Something wrong !!!");
+      if(error?.data?.errors.length){
+        error?.data?.errors.forEach((err)=>{
+            toast.error(err.msg)
+        })
+      }else if (error?.data?.message){
+        toast.error(error.data.message)
+      }else{
+        toast.error("Something went wrong")
+      }
     }
   }, [data, isSuccess, error, isError]);
 
