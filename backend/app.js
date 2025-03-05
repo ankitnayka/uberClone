@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import userRoutes from './routes/user.routes.js'
 import captainRoutes from './routes/captain.routes.js'
+import mapsRoutes from './routes/map.routes.js'
 import cookieParser from 'cookie-parser'
 
 
@@ -24,6 +25,7 @@ app.use(cookieParser());
 
 app.use('/users',userRoutes)
 app.use('/captain',captainRoutes)
+app.use('/maps',mapsRoutes)
 
 
 
