@@ -22,7 +22,7 @@ export const  getAddressCoordinate = async (address) => {
     }
 }
 
-export const  getDistanceTime = async (origin, destination) => {
+export const  getDistanceTimee = async (origin, destination) => {
     if (!origin || !destination) {
         throw new Error('Origin and destination are required');
     }
@@ -52,7 +52,7 @@ export const  getDistanceTime = async (origin, destination) => {
     }
 }
 
-export const  getAutoCompleteSuggestions = async (input) => {
+export const  getAutoCompleteSuggestionss = async (input) => {
     if (!input) {
         throw new Error('query is required');
     }

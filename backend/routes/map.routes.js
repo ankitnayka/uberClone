@@ -1,13 +1,22 @@
 import express from 'express'
 import { isAuthenticated } from '../middleware/auth.middleware.js'
-import { getCordinates } from '../controllers/map.controle.js'
+import { getAutoCompleteSuggestions, getCordinates } from '../controllers/map.controle.js'
 import { query } from 'express-validator'
+import { getDistanceTime } from '../controllers/map.controle.js'
+
+
+
 const router=express.Router()
 
 
 
 router.get('/get-cordinates',query('address').isString().isLength({min:3}),isAuthenticated,getCordinates)
+router.get('/get-distanceTime',
+            query('origin').isString().isLength({min:3}),
+            query('destination').isString().isLength({min:3}),isAuthenticated,getDistanceTime
+)
 
+router.get('/get-suggestion',query('input').isString().isLength({min:3}),getAutoCompleteSuggestions)
 
 export default router
 
