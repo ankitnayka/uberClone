@@ -12,11 +12,11 @@ const captainSlice=createSlice({
         setCaptain:(state,action)=>{
             state.captain=action.payload
         },
-        logoutCaptain:(state)=>{
+        logoutCaptainUi:(state)=>{
             state.captain=null
         }
     }
 });
 
-export const {setCaptain,logoutCaptain}=captainSlice.actions;
+export const {setCaptain,logoutCaptainUi}=captainSlice.actions;
 export default captainSlice.reducer

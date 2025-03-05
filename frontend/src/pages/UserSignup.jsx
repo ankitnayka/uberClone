@@ -52,7 +52,7 @@ const onchangeHandler = (e) => {
   return (
     <>
     <Header/>
-    <div className="min-h-screen w-full bg-[#FFB121] flex flex-col justify-center items-center px-4 sm:px-6 md:px-10 lg:px-20">
+    <div className="min-h-screen mt-8 w-full bg-[#FFB121] flex flex-col justify-center items-center px-4 sm:px-6 md:px-10 lg:px-20">
             <div className="flex flex-col items-center justify-center w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Uber_logo_2018.svg/2560px-Uber_logo_2018.svg.png" alt="uber" className="w-20 py-5 border-b-2" />
                 
@@ -79,6 +79,9 @@ const onchangeHandler = (e) => {
                 <Button disabled={isLoading} className="my-3 w-full bg-black text-white py-2 rounded-lg shadow-md hover:bg-blue-600 flex justify-center items-center" onClick={userSignupHandler}>
                     {isLoading ? <span className="flex items-center"><p className="text-lg">Please wait</p><Loader2 className="w-4 h-4 ml-2 animate-spin" /></span> : 'Create Account'}
                 </Button>
+               <Link to="/captain-signup"> <Button disabled={isLoading} className="my-3 w-full bg-[#333333] text-white py-2 rounded-lg shadow-md hover:bg-blue-600 flex justify-center items-center" >
+                    Sign up as captain
+                </Button> </Link>
                 
                 <p className="text-center text-sm mt-3">Already have an account? <Link to='/login' className="text-blue-600 font-bold">Login here</Link></p>
                 

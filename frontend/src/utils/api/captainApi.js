@@ -23,8 +23,14 @@ export const authCaptainApi=createApi({
                 method:"POST",
                 body:inputData
             })
+        }),
+        logoutCaptain:builder.mutation({
+            query:()=>({
+                url:"logout",
+                method:"GET"
+            })
         })
     })
 })
 
-export const {useRegisterCaptainMutation,useLoginCaptainMutation}=authCaptainApi
+export const {useRegisterCaptainMutation,useLoginCaptainMutation,useLogoutCaptainMutation}=authCaptainApi
