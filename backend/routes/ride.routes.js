@@ -1,7 +1,8 @@
 import express from 'express'
 import {body} from 'express-validator'
-import { createRide } from '../controllers/ride.controller'
-import { isAuthenticated } from '../middleware/auth.middleware'
+import { createRide } from '../controllers/ride.controller.js'
+import { isAuthenticated } from '../middleware/auth.middleware.js'
+
 const router=express.Router()
 
 

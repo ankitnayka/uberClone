@@ -1,5 +1,5 @@
-import { rideModel } from "../models/ride.model";
-import { getDistanceTimee } from "./maps.service";
+import { rideModel } from "../models/ride.model.js";
+import { getDistanceTimee } from "./maps.service.js";
 
 
 const  getFare=async(pickup,destination)=>{
@@ -33,6 +33,14 @@ const  getFare=async(pickup,destination)=>{
     };
     return fare;
 }
+
+const getOtp=(num)=>{
+    function generateOtp(num){
+        const otp=crypto.randomInt(Math.pow(10,num-1),Math.pow(10,num)).toString()
+        return otp;
+    }
+    return generateOtp(num)
+}
 export const createRidee=async({user,pickup,destination,vehicleType})=>{
         if(!user || !pickup || !destination || !vehicleType){
             throw new Error('All field Required!!')
@@ -44,6 +52,7 @@ export const createRidee=async({user,pickup,destination,vehicleType})=>{
             user,
             pickup,
             destination,
+            otp:getOtp(6),
             fare:fare[vehicleType]
         })
         return ride
