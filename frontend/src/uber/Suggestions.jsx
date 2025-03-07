@@ -15,6 +15,8 @@ const suugestionList = [
   }
 ];
 
+
+
 const Suggestions = () => {
   return (
     <>

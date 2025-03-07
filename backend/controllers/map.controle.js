@@ -1,4 +1,4 @@
-import {getAddressCoordinate, getDistanceTimee} from '../services/maps.service.js'
+import {getAddressCoordinate, getAutoCompleteSuggestionss, getDistanceTimee} from '../services/maps.service.js'
 import { validationResult } from 'express-validator';
 
 export const getCordinates=async(req,res,next)=>{
@@ -52,8 +52,8 @@ export const getAutoCompleteSuggestions=async(req,res,next)=>{
             if(!errors.isEmpty()){
                 return res.status(400).json({errors:errors.array()})
             }
-            const input=req.input;
-            const suggestion=await getAutoCompleteSuggestions(input)
+            const {input}=req.query;
+            const suggestion=await getAutoCompleteSuggestionss(input)
 
             res.status(200).json(suggestion)
         } catch (error) {

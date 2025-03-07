@@ -10,10 +10,10 @@ const router=express.Router()
 
 
 
-router.get('/get-cordinates',query('address').isString().isLength({min:3}),isAuthenticated,getCordinates)
+router.get('/get-cordinates',query('address').isString().isLength({min:3}),getCordinates)
 router.get('/get-distanceTime',
             query('origin').isString().isLength({min:3}),
-            query('destination').isString().isLength({min:3}),isAuthenticated,getDistanceTime
+            query('destination').isString().isLength({min:3}),getDistanceTime
 )
 
 router.get('/get-suggestion',query('input').isString().isLength({min:3}),getAutoCompleteSuggestions)

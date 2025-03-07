@@ -3,7 +3,7 @@ import { authApi } from '@/utils/api/userApi';
 import { authCaptainApi } from '@/utils/api/captainApi';
 import userReducer from '../features/api/userSlice'
 import captainReducer from '../features/api/captainSlice'
-
+import { mapsApi } from '@/utils/api/mapsApi';
 
 export const  store =configureStore({
     reducer:{
@@ -13,5 +13,5 @@ export const  store =configureStore({
         captain:captainReducer
     },
     middleware:(getDefaultMiddleware)=>
-        getDefaultMiddleware().concat(authApi.middleware,authCaptainApi.middleware)
+        getDefaultMiddleware().concat(authApi.middleware,authCaptainApi.middleware,mapsApi.middleware)
 })

@@ -62,20 +62,11 @@
 // };
 
 // export default Ride;
-import React, { useState } from "react";
-import { FaLocationArrow } from "react-icons/fa";
-import RideSelection from "./RideSelection";
 
-const dummyLocations = [
-  "New York, USA",
-  "Los Angeles, USA",
-  "Chicago, USA",
-  "San Francisco, USA",
-  "London, UK",
-  "Berlin, Germany",
-  "Tokyo, Japan",
-  "Sydney, Australia",
-];
+
+import React, { useState, useEffect } from "react";
+import { FaLocationArrow } from "react-icons/fa";
+import { useGetSuggestionsQuery } from "../utils/api/mapsApi";
 
 const Ride = () => {
   const [location, setLocation] = useState("");
@@ -83,46 +74,54 @@ const Ride = () => {
   const [filteredLocations, setFilteredLocations] = useState([]);
   const [filteredDestinations, setFilteredDestinations] = useState([]);
 
+  // Fetch suggestions for location
+  const {
+    data: locationSuggestions,
+    isLoading: isLocationLoading,
+    isError: isLocationError,
+  } = useGetSuggestionsQuery(location, { skip: !location || location.length < 3 });
+
+  
+  const {
+    data: destinationSuggestions,
+    isLoading: isDestinationLoading,
+    isError: isDestinationError,
+  } = useGetSuggestionsQuery(destination, { skip: !destination || destination.length < 3 });
+
+  // Update filteredLocations when locationSuggestions change
+  useEffect(() => {
+    if (locationSuggestions) {
+      setFilteredLocations(locationSuggestions);
+    }
+    console.log("Location Suggestions:", locationSuggestions); // Debugging
+  console.log("Destination Suggestions:", destinationSuggestions); // Debugging
+  }, [locationSuggestions,location]);
+
+  // Update filteredDestinations when destinationSuggestions change
+  useEffect(() => {
+    if (destinationSuggestions) {
+      setFilteredDestinations(destinationSuggestions);
+    }
+  }, [destinationSuggestions]);
+
   const handleLocationChange = (e) => {
     const value = e.target.value;
     setLocation(value);
-
-    // Simulating autocomplete suggestions
-    if (value) {
-      setFilteredLocations(
-        dummyLocations.filter((loc) =>
-          loc.toLowerCase().includes(value.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredLocations([]);
-    }
   };
 
   const handleDestinationChange = (e) => {
     const value = e.target.value;
     setDestination(value);
-
-    
-    if (value) {
-      setFilteredDestinations(
-        dummyLocations.filter((loc) =>
-          loc.toLowerCase().includes(value.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredDestinations([]);
-    }
   };
 
   const selectLocation = (value) => {
     setLocation(value);
-    setFilteredLocations([]);
+    setFilteredLocations([]); // Clear suggestions after selection
   };
 
   const selectDestination = (value) => {
     setDestination(value);
-    setFilteredDestinations([]);
+    setFilteredDestinations([]); // Clear suggestions after selection
   };
 
   return (
@@ -136,7 +135,7 @@ const Ride = () => {
             Add your trip details, hop in, and go.
           </p>
 
-          
+          {/* Location Input */}
           <div className="mb-4 relative">
             <div className="relative flex items-center">
               <input
@@ -148,15 +147,17 @@ const Ride = () => {
               />
               <FaLocationArrow className="absolute right-3 text-gray-500" />
             </div>
+            {isLocationLoading && <p>Loading location suggestions...</p>}
+            {isLocationError && <p>Error fetching location suggestions.</p>}
             {filteredLocations.length > 0 && (
               <ul className="absolute w-full bg-white shadow-md rounded-md mt-1">
-                {filteredLocations.map((loc, index) => (
+                {filteredLocations.map((suggestion, index) => (
                   <li
                     key={index}
                     className="p-2 cursor-pointer hover:bg-gray-200"
-                    onClick={() => selectLocation(loc)}
+                    onClick={() => selectLocation(suggestion)}
                   >
-                    {loc}
+                    {suggestion}
                   </li>
                 ))}
               </ul>
@@ -172,15 +173,17 @@ const Ride = () => {
               value={destination}
               onChange={handleDestinationChange}
             />
+            {isDestinationLoading && <p>Loading destination suggestions...</p>}
+            {isDestinationError && <p>Error fetching destination suggestions.</p>}
             {filteredDestinations.length > 0 && (
               <ul className="absolute w-full bg-white shadow-md rounded-md mt-1">
-                {filteredDestinations.map((dest, index) => (
+                {filteredDestinations.map((suggestion, index) => (
                   <li
                     key={index}
                     className="p-2 cursor-pointer hover:bg-gray-200"
-                    onClick={() => selectDestination(dest)}
+                    onClick={() => selectDestination(suggestion)}
                   >
-                    {dest}
+                    {suggestion}
                   </li>
                 ))}
               </ul>
@@ -206,7 +209,6 @@ const Ride = () => {
           className="w-full h-full shadow-xl rounded h-64 object-contain transform transition-transform duration-300 ease-in-out hover:-translate-y-2"
         />
       </div>
-      
     </div>
   );
 };

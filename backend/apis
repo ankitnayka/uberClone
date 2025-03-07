@@ -1,0 +1,14 @@
+https://api.openrouteservice.org/v2/directions/driving-car?api_key=5b3ce3597851110001cf62488da69ddcafe244619e4b4032cda7dcb9&start=8.681495,49.41461&end=8.687872,49.420318
+
+https://api.openrouteservice.org/geocode/search?api_key=YOUR_API_KEY&text=AREA_NAME
+
+
+https://api.openrouteservice.org/v2/directions/driving-car?api_key=5b3ce3597851110001cf62488da69ddcafe244619e4b4032cda7dcb9&text=navsari
+
+https://api.openrouteservice.org/geocode/search?api_key=5b3ce3597851110001cf62488da69ddcafe244619e4b4032cda7dcb9&text=Navsari
+
+
+https://api.openrouteservice.org/geocode/autocomplete?api_key=5b3ce3597851110001cf62488da69ddcafe244619e4b4032cda7dcb9&text=navsari
+
+
+https://api.openrouteservice.org/v2/directions/driving-car?api_key=5b3ce3597851110001cf62488da69ddcafe244619e4b4032cda7dcb9&start=72.920035,20.850393&end=72.825107,21.183303
